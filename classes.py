@@ -63,7 +63,7 @@ class Store(Storage):
         return self.items
 
     def get_unique_items_count(self):
-        return len(self.items.keys())
+        return len([item for item in [item for item in self.items.values()] if item > 0])
 
 
 class Shop(Store):
@@ -74,9 +74,6 @@ class Shop(Store):
 
     def add(self, name, count):
         if self.get_unique_items_count() < self.limit:
-            super().add(name, count)
-            return True
-        elif self.get_unique_items_count() == self.limit and name in self.items.keys():
             super().add(name, count)
             return True
         else:
